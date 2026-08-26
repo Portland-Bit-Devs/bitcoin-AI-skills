@@ -137,12 +137,12 @@ of the good. Present the argument and both objections.
 To evaluate any candidate money, score it on all six (or seven) properties and identify
 which functions it can therefore serve. Some worked-through observations:
 
-- **Gold** — excellent scarcity and durability, poor portability at scale, imperfect
+- **Gold** — excellent scarcity and durability, poor portability at scale, poor fungibility, imperfect
   divisibility. Its portability failure is what drove the centralization that followed.
 - **Fiat currency** — excellent portability, divisibility, and (by mandate) acceptability;
   scarcity is a policy choice rather than a property of the good.
 - **Bitcoin** — the case its proponents make rests on scarcity and on immutability through
-  decentralization;
+  decentralization but also with strong support on the other traditional 6 properties of money;
   the criticisms rest on acceptability and on volatility while it is still early in the
   function sequence.
 
