@@ -82,8 +82,16 @@ possessing them needs no backing.
 
 ## The seventh property: immutability through decentralization
 
+*(Serves: store of value — alongside scarcity and durability.)*
+
 This is the distinctive thesis of Eric Yakes's *The 7th Property*, and should be presented
 as an argued position rather than settled consensus.
+
+It belongs in the **time** dimension with the other two store-of-value properties, and it
+is the one they depend on. Scarcity that a controlling party can revoke was never scarcity;
+a ledger that party can rewrite was never durable. Immutability is what converts the other
+two from claims into properties — which is also why it is easy to overlook when the
+controlling party happens not to be exercising the power.
 
 **The claim:** the six classical properties are incomplete, because they say nothing about
 whether a money's supply and ownership records can be *altered by whoever controls them*.

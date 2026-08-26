@@ -22,7 +22,7 @@ determine how well it does so.
 
 | Dimension | Function served | Achieved by |
 |---|---|---|
-| Across **time** — hold value over time | **Store of value** (acquired 1st) | Scarcity, Durability |
+| Across **time** — hold value over time | **Store of value** (acquired 1st) | Scarcity, Durability, **Immutability** |
 | Across **space** — move over distance | **Medium of exchange** (2nd) | Acceptability, Portability |
 | Across **scales** — group and divide | **Unit of account** (3rd) | Divisibility, Fungibility |
 
@@ -31,8 +31,13 @@ will accept it in trade, and must be widely accepted in trade before prices get 
 it. The property→function mapping above is about salience, not exclusivity — portability
 obviously helps a store of value too.
 
-A candidate seventh property sits above the six. We call it **immutability through
-decentralization**: the resistance of a money's supply and ownership records to alteration
+Immutability is the **seventh** property, and it lands in the time row because that is where
+it does its work: a supply that can be altered by whoever controls it cannot hold value
+across time, no matter how durable or nominally scarce it is. Read it as the property that
+makes the other two in that row *credible* — scarcity that can be revoked was never
+scarcity, and a record that can be rewritten was never durable.
+
+We call the seventh property **immutability through decentralization**: the resistance of a money's supply and ownership records to alteration
 by whoever controls them, achieved *because* production and storage are decentralized
 rather than by anyone's promise not to alter them. The name carries the mechanism on
 purpose — immutability is the property, decentralization is what produces it, and a money
