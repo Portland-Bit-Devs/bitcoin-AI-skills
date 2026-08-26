@@ -11,8 +11,8 @@ the salability→function→property mapping, the three functions in acquisition
 properties, the monetary-vs-market-value distinction, and the treatment of "backing."
 The seventh-property thesis — immutability, enabled by decentralized production and
 storage — is Yakes's own contribution, developed in the chapters on the history of
-centralized money. The name this skill uses for it, **"immutability through
-decentralization,"** is ours: the book argues the mechanism but does not bind it into a
+centralized money. The name this skill uses for it —
+**"immutability through decentralization"** — is ours: the book argues the mechanism but does not bind it into a
 single label, and naming it that way keeps the mechanism attached to the property every
 time it's cited.
 

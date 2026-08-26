@@ -5,7 +5,7 @@
     "name": "Jon Austen"
   },
   "metadata": {
-    "description": "A marketplace of self-owned, openly licensed Agent Skills for working with Bitcoin — the software, the protocol, and the money.",
+    "description": "A marketplace of self-owned, openly licensed Agent Skills for working with Bitcoin \u2014 the software, the protocol, and the money.",
     "version": "0.1.0"
   },
   "plugins": [
@@ -14,30 +14,61 @@
       "source": "./plugins/bitcoin-cli",
       "description": "Drive a Bitcoin Core node from the command line: bitcoin-cli invocation, JSON-RPC methods, wallet and chainstate queries, and reading the results correctly.",
       "version": "0.1.0",
-      "author": { "name": "Jon Austen" },
+      "author": {
+        "name": "Jon Austen"
+      },
       "license": "GPL-3.0",
       "category": "development",
-      "keywords": ["bitcoin", "bitcoin-cli", "bitcoin-core", "json-rpc", "node", "regtest"]
+      "keywords": [
+        "bitcoin",
+        "bitcoin-cli",
+        "bitcoin-core",
+        "json-rpc",
+        "node",
+        "regtest"
+      ]
     },
     {
       "name": "money",
       "source": "./plugins/money",
       "description": "What money actually is: the properties that make something money, the functions it serves, and how to evaluate a monetary good against them.",
       "version": "0.1.0",
-      "author": { "name": "Jon Austen" },
+      "author": {
+        "name": "Jon Austen"
+      },
       "license": "GPL-3.0",
       "category": "learning",
-      "keywords": ["money", "sound-money", "monetary-theory", "store-of-value", "medium-of-exchange", "bitcoin"]
+      "keywords": [
+        "money",
+        "sound-money",
+        "monetary-theory",
+        "store-of-value",
+        "medium-of-exchange",
+        "unit-of-account",
+        "salability",
+        "immutability",
+        "decentralization",
+        "bitcoin"
+      ]
     },
     {
       "name": "bitcoin-code",
       "source": "./plugins/bitcoin-code",
-      "description": "Read and explain the Bitcoin Core source tree — locate consensus rules, validation, policy, and wallet code in github.com/bitcoin/bitcoin and answer questions with file:line evidence.",
+      "description": "Read and explain the Bitcoin Core source tree \u2014 locate consensus rules, validation, policy, and wallet code in github.com/bitcoin/bitcoin and answer questions with file:line evidence.",
       "version": "0.1.0",
-      "author": { "name": "Jon Austen" },
+      "author": {
+        "name": "Jon Austen"
+      },
       "license": "GPL-3.0",
       "category": "development",
-      "keywords": ["bitcoin", "bitcoin-core", "source-code", "consensus", "validation", "code-reading"]
+      "keywords": [
+        "bitcoin",
+        "bitcoin-core",
+        "source-code",
+        "consensus",
+        "validation",
+        "code-reading"
+      ]
     }
   ]
 }
