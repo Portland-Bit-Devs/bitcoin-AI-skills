@@ -1,6 +1,6 @@
 ---
 name: money
-description: Use when the conversation turns on what money *is* rather than on a specific tool or transaction — defining money, salability, the three functions (store of value, medium of exchange, unit of account), the six properties of a monetary good (scarcity, durability, acceptability, portability, divisibility, fungibility), the seventh property — "immutability through decentralization" — monetary value vs. market value, why money does or doesn't need to be "backed" by something, or comparing candidate monies (gold, fiat currency, bitcoin) against those criteria. Triggers on "what is money", "is X money", "why does money have value", "sound money", "store of value", "medium of exchange", "unit of account", "salability", "hard money", "immutability", "immutability through decentralization", "what backs the dollar", "who controls the money supply", "why is inflation bad", and on framing questions like "explain why bitcoin is or isn't money", "what makes something a good currency", or "how did money come about in the first place".
+description: Use when the conversation turns on what money *is* rather than on a specific tool or transaction — defining money, salability, the three functions (store of value, medium of exchange, unit of account), the six properties of a monetary good (scarcity, durability, acceptability, portability, divisibility, fungibility), the seventh property — "immutability through decentralization" — monetary value vs. market value, why money does or doesn't need to be "backed" by something, or comparing candidate monies (gold, fiat currency, bitcoin) against those criteria. Triggers on "what is money", "is X money", "why does money have value", "sound money", "store of value", "medium of exchange", "unit of account", "salability", "hard money", "immutability", "immutability through decentralization", "fungibility", "tainted coins", "covenants", "what backs the dollar", "who controls the money supply", "are all bitcoin the same", "why is inflation bad", and on framing questions like "explain why bitcoin is or isn't money", "what makes something a good currency", or "how did money come about in the first place".
 ---
 
 # Money
@@ -71,8 +71,10 @@ Load these on demand; don't read them all for a passing question.
 
 - `references/definition.md` — salability, declining marginal utility, emergence from
   barter, convergence and network effects, monetary vs. market value
-- `references/properties.md` — the six properties in detail, the scarcity argument, the
-  "backing" fallacy, and immutability through decentralization
+- `references/properties.md` — the six properties in detail, the scarcity argument, an
+  extended treatment of fungibility (its three layers, how it applies to Bitcoin, design
+  intent, and the covenant debate), the "backing" fallacy, and immutability through
+  decentralization
 - `references/sources.md` — where this framework comes from, and what to read next
 
 ## Stance

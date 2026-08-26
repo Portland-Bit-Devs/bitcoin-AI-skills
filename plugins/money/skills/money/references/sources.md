@@ -30,6 +30,28 @@ readable and quotable, and the right place to start.
 **Saifedean Ammous, *The Bitcoin Standard* (2018).** The decomposition of salability into
 time, space, and scales.
 
+## On fungibility and Bitcoin
+
+**Satoshi Nakamoto, *Bitcoin: A Peer-to-Peer Electronic Cash System* (2008), §10 "Privacy."**
+The source for design intent: privacy — and therefore fungibility — was to come from keeping
+public keys anonymous and using a fresh key pair per transaction, not from hiding the
+transaction graph. Short and worth reading in full. Released under the MIT license.
+
+For the practical failure of that mechanism, see writing on taint analysis and exchange
+compliance — [Spark's taint-analysis glossary entry](https://www.spark.money/glossary/taint-analysis),
+[River on Bitcoin fungibility](https://river.com/learn/bitcoin-fungibility/), and
+[Protos on sanctions and censorship](https://protos.com/bitcoin-fungible-crypto-sanctions-censorship-and-esg/).
+
+On covenants and the recursion debate:
+[Unchained on covenants and CTV](https://www.unchained.com/blog/covenants-ctv-bitcoin-custody),
+[Bitcoin Magazine's overview](https://bitcoinmagazine.com/featured/bitcoin-covenants-what-are-they-and-what-do-they-do),
+and a [comparison of active proposals](https://www.spark.money/tools/bitcoin-covenant-proposals-compared).
+There is no developer consensus here; read more than one.
+
+**Activation status goes stale fast.** Any claim in this skill about which proposals are
+active is dated August 2026 — check BIP status and current Core discussion instead of citing
+this skill.
+
 ## Worth reading for the other side
 
 The Mengerian "barter → commodity money → coinage" account is standard in economics and
