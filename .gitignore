@@ -1,0 +1,13 @@
+# Source material — copyrighted books and papers used as references while writing
+# skills. NEVER commit these: this repository is public and GPL-3.0, and we do not
+# hold the rights to redistribute them. Restate and attribute instead; see
+# plugins/money/skills/money/references/sources.md
+*.pdf
+*.epub
+*.mobi
+*.azw3
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/

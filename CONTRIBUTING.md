@@ -63,6 +63,21 @@ that name, and changing it breaks their install. Pick carefully. If a rename is 
 unavoidable, add a `renames` entry at the top level of `marketplace.json` so existing
 installs migrate automatically.
 
+## Source material and copyright
+
+This repository is public and GPL-3.0. Publishing a skill here is **distribution**.
+
+- **Never commit copyrighted source material** — books, papers, or purchased PDFs. `.gitignore`
+  blocks `*.pdf`/`*.epub` by default; don't work around it.
+- **Restate, don't reproduce.** Frameworks, taxonomies, and ideas are not copyrightable and are
+  fair to synthesize. Extended excerpts, transcribed passages, and summaries dense enough to
+  substitute for the original are not.
+- **Attribute.** Name the source and chapter in a `references/sources.md`, and point readers at
+  the original. If a skill leans heavily on one book, say so and tell people to buy it.
+- **You can't relicense someone else's expression** as GPL-3.0. Only contribute what you can.
+- **Cite the other side.** Where a framework is contested, name the counter-argument rather than
+  presenting one school as settled fact.
+
 ## Safety rules for Bitcoin skills
 
 This is money. Skills in this repo must not instruct Claude to:

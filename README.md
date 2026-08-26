@@ -24,11 +24,16 @@ Or browse everything with `/plugin` → **Discover** inside Claude Code.
 | Plugin | What it covers | Status |
 |---|---|---|
 | [`bitcoin-cli`](plugins/bitcoin-cli) | Driving a Bitcoin Core node from the shell — RPC calls, wallets, regtest | 🚧 stub |
-| [`money`](plugins/money) | What money is: the three functions, the monetary properties, how to evaluate a money | 🚧 stub |
+| [`money`](plugins/money) | What money is: salability, the three functions, the six properties, and the seventh | ✅ v0.1 |
 | [`bitcoin-code`](plugins/bitcoin-code) | Reading the Bitcoin Core source tree, with a read-only source-reader agent | 🚧 stub |
 
 🚧 **stub** means the structure and skill descriptions are in place but the reference
 material has not been written yet. See each skill's `TODO` section.
+
+## Sources
+
+Skills here are syntheses that cite their sources. Copyrighted source material is **never**
+committed to this repository — see `.gitignore` and [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Contributing
 
