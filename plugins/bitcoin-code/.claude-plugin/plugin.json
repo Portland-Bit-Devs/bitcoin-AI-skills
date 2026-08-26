@@ -1,0 +1,19 @@
+{
+  "name": "bitcoin-code",
+  "description": "Read and explain the Bitcoin Core source tree \u2014 locate consensus rules, validation, policy, and wallet code in github.com/bitcoin/bitcoin and answer questions with file:line evidence.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jon Austen"
+  },
+  "homepage": "https://github.com/austenjt/bitcoin-AI-skills",
+  "repository": "https://github.com/austenjt/bitcoin-AI-skills",
+  "license": "GPL-3.0",
+  "keywords": [
+    "bitcoin",
+    "bitcoin-core",
+    "source-code",
+    "consensus",
+    "validation",
+    "code-reading"
+  ]
+}

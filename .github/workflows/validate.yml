@@ -1,0 +1,50 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Validate marketplace and plugins
+        run: claude plugin validate . --strict
+
+      - name: Check marketplace entries resolve
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path('.')
+          mkt = json.loads((root / '.claude-plugin/marketplace.json').read_text())
+          failures = []
+          for p in mkt['plugins']:
+              src = p['source']
+              if not isinstance(src, str):
+                  continue  # remote source; validated by claude plugin validate
+              manifest = root / src / '.claude-plugin/plugin.json'
+              if not manifest.exists():
+                  failures.append(f"{p['name']}: missing {manifest}")
+                  continue
+              pj = json.loads(manifest.read_text())
+              if pj['name'] != p['name']:
+                  failures.append(f"{p['name']}: plugin.json name is {pj['name']!r}")
+              if pj.get('version') != p.get('version'):
+                  failures.append(
+                      f"{p['name']}: version mismatch "
+                      f"(marketplace {p.get('version')!r} vs plugin.json {pj.get('version')!r})"
+                  )
+              if pj.get('description') != p.get('description'):
+                  failures.append(f"{p['name']}: description differs from plugin.json")
+          if failures:
+              print('\n'.join(failures), file=sys.stderr)
+              sys.exit(1)
+          print(f"{len(mkt['plugins'])} marketplace entries OK")
+          PY

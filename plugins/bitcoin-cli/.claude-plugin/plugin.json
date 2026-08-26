@@ -1,0 +1,19 @@
+{
+  "name": "bitcoin-cli",
+  "description": "Drive a Bitcoin Core node from the command line: bitcoin-cli invocation, JSON-RPC methods, wallet and chainstate queries, and reading the results correctly.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jon Austen"
+  },
+  "homepage": "https://github.com/austenjt/bitcoin-AI-skills",
+  "repository": "https://github.com/austenjt/bitcoin-AI-skills",
+  "license": "GPL-3.0",
+  "keywords": [
+    "bitcoin",
+    "bitcoin-cli",
+    "bitcoin-core",
+    "json-rpc",
+    "node",
+    "regtest"
+  ]
+}

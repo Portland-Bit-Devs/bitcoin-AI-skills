@@ -1,0 +1,19 @@
+{
+  "name": "money",
+  "description": "What money actually is: the properties that make something money, the functions it serves, and how to evaluate a monetary good against them.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jon Austen"
+  },
+  "homepage": "https://github.com/austenjt/bitcoin-AI-skills",
+  "repository": "https://github.com/austenjt/bitcoin-AI-skills",
+  "license": "GPL-3.0",
+  "keywords": [
+    "money",
+    "sound-money",
+    "monetary-theory",
+    "store-of-value",
+    "medium-of-exchange",
+    "bitcoin"
+  ]
+}

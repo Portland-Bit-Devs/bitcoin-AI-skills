@@ -1,0 +1,1 @@
+../../plugins/bitcoin-code/agents/bitcoin-source-reader.md
