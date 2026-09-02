@@ -1,45 +1,120 @@
 ---
 name: bitcoin-code
-description: Use when a question is about the Bitcoin Core implementation itself — where a rule lives in the source, how a code path works, what a specific function or file does, what changed in a release, or how a BIP is actually implemented. Triggers on mentions of bitcoin/bitcoin, Bitcoin Core source, validation.cpp, consensus rules in code, script interpreter, mempool policy, wallet descriptors, or a specific symbol like CheckBlock/ConnectBlock/AcceptToMemoryPool, and on questions phrased without those names — "where is the 21 million cap enforced", "how does Core decide to relay a transaction", "show me how signature verification actually works", "what does this Core PR change".
+description: Use when researching how Bitcoin actually works at the implementation and specification level — locating where a consensus rule, policy check, or behaviour lives in the Bitcoin Core source, tracing a code path, finding when and why something changed, reading a BIP, or mapping a BIP onto the code that implements it. Covers setting up local clones of github.com/bitcoin/bitcoin and github.com/bitcoin/bips, wiring clangd so go-to-definition and find-references work, the source tree layout, git archaeology (`git log -S`, `git blame`, release tags), pull-request and review history via `gh`, and Core's own `doc/bips.md` and `doc/AI_POLICY.md`. Triggers on mentions of bitcoin/bitcoin, Bitcoin Core source, validation.cpp, script interpreter, mempool policy, consensus rules in code, a symbol like CheckBlock/ConnectBlock/EvalScript/MAX_MONEY, a BIP number, a Core PR number, and on questions phrased without any of those — "where is the 21 million cap enforced", "when did this rule change and why", "how does Core decide to relay a transaction", "show me how signature verification actually works", "which release shipped taproot", "what does this PR change", "is this behaviour consensus or policy", "clone the bitcoin source", "set up a language server for the bitcoin code".
 ---
 
 # bitcoin-code
 
-> **Status: stub.** Structure is in place; the reference material is not written yet.
+Research tooling for the Bitcoin implementation and its specifications. Two repositories
+answer most questions:
 
-Questions about Bitcoin's rules are ultimately questions about code: the consensus
-rules are whatever the implementation does. This skill answers them by reading
-`github.com/bitcoin/bitcoin` and citing what it finds.
+| Repository | Is | Answers |
+|---|---|---|
+| [`bitcoin/bitcoin`](https://github.com/bitcoin/bitcoin) | The implementation | What the network **actually does** |
+| [`bitcoin/bips`](https://github.com/bitcoin/bips) | The specifications | What was **proposed and agreed** |
+
+When they disagree, **the code is what the network enforces** — a BIP is a description,
+and the deployed software is the thing miners and nodes run. Say which one you are quoting.
 
 ## Scope
 
-- Locating code in the Bitcoin Core tree: consensus, validation, policy, script, wallet, RPC, net
-- Explaining a code path end to end, with `file:line` citations
-- Mapping a BIP or a described behavior onto the code that implements it
-- Reading a specific commit, tag, or pull request
+- Setting up local clones, and wiring clangd for real code intelligence
+- The source tree: where consensus, policy, script, wallet, net, and RPC live
+- Answering "where is X enforced" with `file:line` evidence at a pinned ref
+- Git archaeology: when a rule appeared, which release shipped it, who changed it and why
+- Pull requests and review history via `gh`
+- BIPs: reading them, and mapping BIP ↔ implementing code
 
-Out of scope: running a node (see `bitcoin-cli`), and monetary theory (see `money`).
+Out of scope, with the skill that covers each:
 
-## How to use this skill
-
-Dispatch the `bitcoin-code:bitcoin-source-reader` agent for anything that requires
-actually searching the tree. It is read-only and returns findings with citations.
-Answer directly from this skill only for orientation questions ("which directory
-holds X") that don't need the source in front of you.
+| Topic | Skill |
+|---|---|
+| Running a node, `bitcoin-cli` | **`bitcoin-cli`** |
+| The RPC/REST/ZMQ interfaces | **`bitcoin-api`** |
+| Installing Bitcoin Core to *use* it | **`bitcoin-install`** |
+| Monetary theory | **`money`** |
 
 ## Ground rules
 
-- **Cite or don't claim.** Every statement about what the code does must carry a
-  `file:line` reference at a named commit or tag. Bitcoin's behavior is too consequential
-  to describe from memory — and memory of this codebase goes stale every release.
-- **Pin the version.** Always state which ref you read (`master` at a given sha, or a
-  release tag like `v28.0`). "Bitcoin Core does X" without a ref is an unfinished answer.
-- **Read-only.** This skill reads upstream source. It never modifies a Bitcoin Core
-  checkout, opens PRs, or pushes anything.
+**Cite or don't claim.** Every statement about what the code does carries a `file:line`
+reference at a named ref. Bitcoin's behaviour is too consequential to describe from memory,
+and memory of this codebase goes stale every release.
 
-## TODO
+**Pin the version.** Always state which ref you read — `master` at a given sha, or a
+release tag like `v31.1`. "Bitcoin Core does X" without a ref is an unfinished answer.
 
-- [ ] `references/tree-map.md` — directory-by-directory map of the Core source tree
-- [ ] `references/key-paths.md` — the well-known code paths (block validation, tx relay, script eval)
-- [ ] `references/bip-index.md` — BIP → implementing files
-- [ ] `evals/evals.json` — cases covering a "where is X enforced" and a "explain this path" question
+```bash
+git -C "$BITCOIN_SRC" rev-parse --short HEAD
+```
+
+**Distinguish consensus from policy.** A rule in `src/consensus/` or reached from
+`ConnectBlock` makes blocks invalid for everyone. A rule in `src/policy/` only governs what
+*this node* relays or mines — other nodes may differ, and it can change without a fork.
+Conflating them is the most common substantive error in Bitcoin source answers.
+
+**Distinguish the spec from the implementation.** A BIP's status — `Draft`, `Complete`,
+`Deployed`, or `Closed` under the current process — says nothing about whether Bitcoin Core
+implements it. `doc/bips.md` in the Core tree is the authoritative mapping. Note the status
+vocabulary itself changed when BIP 3 replaced BIP 2, so older write-ups cite values like
+`Proposed` and `Final` that no longer exist. See `references/bips.md`.
+
+**Read-only.** This skill reads upstream source. It never commits, pushes, fetches into a
+user's checkout, changes their checked-out ref, or builds.
+
+## Core's AI policy — read this before contributing anything
+
+Bitcoin Core ships [`doc/AI_POLICY.md`](https://github.com/bitcoin/bitcoin/blob/master/doc/AI_POLICY.md).
+It permits AI as a coding tool but draws hard lines that this skill must respect:
+
+- **"Pull requests should not be opened or driven by autonomous agents."** A human must
+  choose the work, understand the change, and be responsible for it.
+- **"Do not include agents as authors or co-authors of your commits."**
+- **AI-written comments to maintainers are not acceptable** — issue and review comments are
+  expected to be written by humans, and may be moderated if they appear AI-generated.
+- Only open a PR if you know the language, could have written the code yourself, and
+  understand the surrounding code.
+- If you include AI-derived context in a comment, disclose it and add human commentary.
+
+**Research and reading are entirely fine — that is what this skill is for.** Drafting a
+contribution *for a human who will understand and own it* is fine. Opening or driving a PR,
+or ghost-writing review comments, is not. If a user asks for that, say so plainly and point
+them at the policy rather than complying.
+
+## How to use this skill
+
+**Prefer a local clone.** `Grep` and `Read` over a checkout are faster, complete, and
+rate-limit free, and they unlock `git log`/`blame`, which is where most research value
+lives. If none exists, ask before cloning — it is a multi-hundred-MB fetch — and ask *where
+to put it*. See `references/setup.md`.
+
+**Search before you assume.** The tree is large and names are reused. Start from
+`references/tree-map.md`, then grep. Exclude `src/test/`, `src/bench/`, and `src/qt/` from a
+first pass unless the question is about them.
+
+**Answer "why" with git, not with prose.** `git log -S` finds the commit that introduced a
+constant; `git blame` names the change behind a line; the merge commit names the PR, and
+the PR carries the rationale and the review. See `references/research.md` and
+`references/prs-and-history.md`.
+
+**Use the `bitcoin-source-reader` agent** for searches that would otherwise dump a lot of
+file content into the conversation. It is read-only and returns findings with citations.
+
+## Reference material
+
+Load on demand. Each file opens with a "Read this when" note and its own contents table.
+
+| File | Read it when | Verified? |
+|---|---|---|
+| `references/setup.md` | Cloning, or wiring clangd for go-to-definition | **yes** |
+| `references/tree-map.md` | You need to know *where to look* | **yes** |
+| `references/research.md` | Finding a rule, or when and why it changed | **yes** |
+| `references/prs-and-history.md` | Following a change to its PR and review | **yes** |
+| `references/bips.md` | Reading a BIP, or mapping BIP ↔ code | **yes** |
+| `references/sources.md` | Checking a claim, or editing this skill | — |
+
+## Status
+
+Written and verified against a full local clone of `bitcoin/bitcoin` (50,403 commits,
+master at 2026-09-02) and `bitcoin/bips` (210 BIP files), with `gh` against the live
+GitHub API. Symbol locations and line numbers move between releases — re-derive them rather
+than trusting the ones quoted here.

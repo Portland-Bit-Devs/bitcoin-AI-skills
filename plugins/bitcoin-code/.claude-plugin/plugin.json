@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-code",
-  "description": "Read and explain the Bitcoin Core source tree \u2014 locate consensus rules, validation, policy, and wallet code in github.com/bitcoin/bitcoin and answer questions with file:line evidence.",
+  "description": "Research the Bitcoin implementation and its specifications: locate consensus and policy rules in the bitcoin/bitcoin source with file:line evidence, trace when and why they changed, follow pull requests and review history, and map BIPs to the code that implements them.",
   "version": "0.1.0",
   "author": {
     "name": "Jon Austen"
@@ -13,7 +13,13 @@
     "bitcoin-core",
     "source-code",
     "consensus",
+    "policy",
     "validation",
-    "code-reading"
+    "bips",
+    "pull-requests",
+    "clangd",
+    "lsp",
+    "code-reading",
+    "research"
   ]
 }

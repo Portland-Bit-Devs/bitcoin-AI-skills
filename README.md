@@ -27,7 +27,7 @@ Or browse everything with `/plugin` → **Discover** inside Claude Code.
 | [`bitcoin-cli`](plugins/bitcoin-cli) | Driving a Bitcoin Core node from the shell — flags, argument quoting, reading output, regtest | ✅ v0.1 |
 | [`bitcoin-api`](plugins/bitcoin-api) | Talking to a node over the wire — JSON-RPC over HTTP, the REST interface, and ZMQ notifications | ✅ v0.1 |
 | [`money`](plugins/money) | What money is: salability, the three functions, the six properties, and the seventh — *immutability through decentralization* | ✅ v0.1 |
-| [`bitcoin-code`](plugins/bitcoin-code) | Reading the Bitcoin Core source tree, with a read-only source-reader agent | 🚧 stub |
+| [`bitcoin-code`](plugins/bitcoin-code) | Researching the Bitcoin source and BIPs — consensus vs. policy, git archaeology, PRs, clangd | ✅ v0.1 |
 
 🚧 **stub** means the structure and skill descriptions are in place but the reference
 material has not been written yet. See each skill's `TODO` section.
