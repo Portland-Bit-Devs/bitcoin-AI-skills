@@ -1,9 +1,22 @@
 ---
 name: bitcoin-install
-description: Use when installing, upgrading, uninstalling, or first running Bitcoin Core on macOS — choosing between the Homebrew formula and the Homebrew cask, getting `bitcoin-cli` and `bitcoind` onto your PATH, running the Bitcoin-Qt desktop node and enabling its RPC server, or spinning up a disposable regtest Lightning network with Polar and Docker. Triggers on "install bitcoin", "brew install bitcoin", "install Bitcoin Core", "bitcoin-cli command not found", "bitcoind not found", "I have the app but no command line tools", "set up a bitcoin node", "how do I run bitcoind", "Bitcoin-Qt", "where is bitcoin.conf", "which datadir", "upgrade Bitcoin Core", "uninstall bitcoin", "brew services start bitcoin", "Polar", "polarlightning", "regtest network", "local lightning dev environment", "bitcoin in docker", "polaruser/polarpass", and on phrasings that never name a tool — "my node syncs really slowly", "do I need Docker for this", "how do I test without real money", "I want a local chain I can mine on". macOS only. Not for using the tools once they are installed — that is `bitcoin-cli` for the shell and `bitcoin-api` for HTTP/ZMQ; not for reading Core's source — that is `bitcoin-code`.
+description: Use when installing, upgrading, uninstalling, or first running Bitcoin Core on macOS — choosing between the Homebrew formula and the Homebrew cask, getting `bitcoin-cli` and `bitcoind` onto your PATH, running the Bitcoin-Qt desktop node and enabling its RPC server, or spinning up a disposable regtest Lightning network with Polar and Docker. Triggers on "install bitcoin", "brew install bitcoin", "install Bitcoin Core", "bitcoin-cli command not found", "bitcoind not found", "I have the app but no command line tools", "set up a bitcoin node", "how do I run bitcoind", "Bitcoin-Qt", "where is bitcoin.conf", "which datadir", "upgrade Bitcoin Core", "uninstall bitcoin", "brew services start bitcoin", "Polar", "polarlightning", "polaruser/polarpass", "regtest network", "bitcoin in docker". ONLY once Bitcoin is named or already established in context, also triggers on "my node syncs really slowly", "how do I test without real money", "I want a local chain I can mine on". Bitcoin Core on macOS only — do NOT load for Ethereum, Solana, or any other chain, for a Lightning implementation on its own, or for generic Docker, server, or node questions. Not for using the tools once installed — that is `bitcoin-cli` for the shell and `bitcoin-api` for HTTP/ZMQ; not for reading Core's source — that is `bitcoin-code`.
 ---
 
 # bitcoin-install
+
+## Preconditions
+
+This skill is about **Bitcoin Core on macOS**. Confirm that before using it.
+
+Stop and say so in one line if the subject is another chain (Ethereum, Solana, Litecoin,
+Monero), a Lightning implementation on its own, a non-blockchain node or server, or Linux
+or Windows. The package names, install paths, datadir locations, and the formula/cask
+distinction here are macOS-and-Bitcoin-Core-specific and are wrong elsewhere — translating
+them across is worse than not answering. On Linux, point at the distribution's packages or
+bitcoincore.org and stop.
+
+If it's genuinely ambiguous which chain or OS is meant, ask rather than assume.
 
 Getting Bitcoin Core onto a Mac, and running it the way you actually intend to.
 

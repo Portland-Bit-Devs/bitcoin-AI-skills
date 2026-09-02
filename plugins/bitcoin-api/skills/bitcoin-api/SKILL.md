@@ -1,9 +1,22 @@
 ---
 name: bitcoin-api
-description: Use when talking to a Bitcoin Core node over its network interfaces rather than through the `bitcoin-cli` wrapper — building or debugging JSON-RPC calls over HTTP, the unauthenticated REST interface, or ZMQ notifications, from curl, Postman, or application code in any language. Covers RPC authentication (the `.cookie` file, `rpcauth`, `rpcuser`/`rpcpassword`), the `/` and `/wallet/<name>` endpoints, positional vs. named parameters and the `args` convention, JSON-RPC 1.1 vs. 2.0 differences, batching, HTTP status and RPC error codes (-28 warmup, -18 wallet not found, -19 wallet not specified, -5, -8, -32601), `rpcbind`/`rpcallowip`/`rpcworkqueue`, `/rest/` paths, and ZMQ topics. Triggers on "bitcoin RPC", "bitcoind JSON-RPC", "curl my bitcoin node", "connect to Bitcoin Core from Python/Node/Go", "Postman bitcoin", "401 Unauthorized from bitcoind", "connection refused on 8332", "which port is regtest RPC", "getblockchaininfo over HTTP", "rest/chaininfo.json", "ZMQ notifications", "get notified when a new block arrives", "watch the mempool from my app", and on phrasings that never name the protocol — "my app can't reach my node", "how do I read my node from a script", "poll for new transactions". Not for driving the node from a shell or writing `jq` pipelines — that is `bitcoin-cli`; not for installing or first-running Core — that is `bitcoin-install`; not for how Core implements any of this — that is `bitcoin-code`; not for third-party explorer APIs such as mempool.space.
+description: Use when talking to a Bitcoin Core node over its network interfaces rather than through `bitcoin-cli` — building or debugging JSON-RPC calls over HTTP, the unauthenticated REST interface, or ZMQ notifications, from curl, Postman, or app code. Covers RPC authentication (the `.cookie` file, `rpcauth`, `rpcuser`/`rpcpassword`), the `/` and `/wallet/<name>` endpoints, positional vs. named parameters and the `args` convention, JSON-RPC 1.1 vs. 2.0, batching, HTTP status and RPC error codes (-28 warmup, -18 wallet not found, -19 wallet not specified, -5, -8, -32601), `rpcbind`/`rpcallowip`/`rpcworkqueue`, `/rest/` paths, and ZMQ topics. Triggers on "bitcoin RPC", "bitcoind JSON-RPC", "curl my bitcoin node", "connect to Bitcoin Core from Python/Node/Go", "Postman bitcoin", "401 Unauthorized from bitcoind", "connection refused on 8332", "which port is regtest RPC", "getblockchaininfo over HTTP", "rest/chaininfo.json". ONLY once Bitcoin is named or already established in context, also triggers on "my app can't reach my node", "poll for new transactions", "get notified when a new block arrives", "watch the mempool from my app". Bitcoin Core only — do NOT load for other chains, for generic HTTP or JSON-RPC debugging, or for third-party explorer APIs such as mempool.space. Not for a shell and `jq` — that is `bitcoin-cli`; not for installing Core — that is `bitcoin-install`; not for how Core implements this — that is `bitcoin-code`.
 ---
 
 # bitcoin-api
+
+## Preconditions
+
+This skill is about **Bitcoin Core's own RPC, REST, and ZMQ interfaces**. Confirm that
+before using it.
+
+Stop and say so in one line if the subject is another chain's RPC (Ethereum JSON-RPC,
+Solana, a Lightning node's gRPC), a third-party explorer API such as mempool.space or
+Esplora, or generic HTTP/JSON-RPC debugging with no Bitcoin in it. Port 8332, the cookie
+file, the `/wallet/<name>` endpoint, and every numeric error code here belong to Bitcoin
+Core — Ethereum's JSON-RPC shares a name and almost nothing else.
+
+If it's genuinely ambiguous which node is meant, ask rather than assume.
 
 A Bitcoin Core node exposes three network interfaces. This skill is about speaking to
 them directly — from `curl`, from Postman, from application code — rather than through

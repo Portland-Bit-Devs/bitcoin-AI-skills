@@ -1,9 +1,22 @@
 ---
 name: bitcoin-cli
-description: Use when driving a Bitcoin Core node from a terminal or a shell script with `bitcoin-cli` — composing a command, quoting its arguments, reading what comes back, or building a pipeline with `jq`. Covers connection and network flags (`-regtest`, `-signet`, `-testnet4`, `-datadir`, `-rpcwallet`, `-rpcwait`, `-rpcconnect`), the client-only helpers (`-getinfo`, `-netinfo`, `-addrinfo`, `-generate`), positional vs. `-named` arguments and the per-method JSON conversion that makes some arguments need quotes and others not, passing secrets via `-stdin`/`-stdinrpcpass`/`-stdinwalletpassphrase`, exit codes and stderr, output shapes, BTC-vs-satoshi units and float-precision hazards, fee math, confirmation semantics, and the regtest mine-and-fund workflow. Triggers on "bitcoin-cli", "bitcoind", "getblockchaininfo", "getrawtransaction", "listunspent", "generatetoaddress", "bitcoin-cli error parsing JSON", and on phrasings that never name the tool — "check if my node is synced", "look up this txid", "how much is in this wallet", "why is my transaction still unconfirmed", "what fee did I pay", "spin up a local Bitcoin network to test against", "mine some coins to test with", "script this against my node". Not for the HTTP wire protocol, authentication mechanisms, or the RPC error-code tables — that is `bitcoin-api`; not for installing Core or getting `bitcoin-cli` onto PATH — that is `bitcoin-install`; not for how Core implements a rule — that is `bitcoin-code`.
+description: Use when driving a Bitcoin Core node from a terminal or a shell script with `bitcoin-cli` — composing a command, quoting its arguments, reading what comes back, or building a pipeline with `jq`. Covers connection and network flags (`-regtest`, `-signet`, `-testnet4`, `-datadir`, `-rpcwallet`, `-rpcwait`), the client-only helpers (`-getinfo`, `-netinfo`, `-addrinfo`, `-generate`), positional vs. `-named` arguments and the per-method JSON conversion that decides which need quotes, passing secrets via `-stdin`/`-stdinrpcpass`/`-stdinwalletpassphrase`, exit codes and stderr, output shapes, BTC-vs-satoshi units and float-precision hazards, fee math, confirmation semantics, and the regtest mine-and-fund workflow. Triggers on "bitcoin-cli", "bitcoind", "getblockchaininfo", "getrawtransaction", "listunspent", "generatetoaddress", "bitcoin-cli error parsing JSON". ONLY once Bitcoin is named or already established in context, also triggers on "check if my node is synced", "look up this txid", "how much is in this wallet", "why is my transaction still unconfirmed", "what fee did I pay", "mine some coins to test with". Bitcoin Core only — do NOT load for Ethereum, Solana, or any other chain, or for non-blockchain nodes and servers. Not for the HTTP wire protocol, auth, or RPC error-code tables — that is `bitcoin-api`; not for installing Core — that is `bitcoin-install`; not for how Core implements a rule — that is `bitcoin-code`.
 ---
 
 # bitcoin-cli
+
+## Preconditions
+
+This skill is about the **`bitcoin-cli` binary talking to Bitcoin Core**. Confirm that
+before using it.
+
+Stop and say so in one line if the subject is another chain's CLI (`geth`, `solana`,
+`lncli`, `bitcoin-cash`…), a non-blockchain node or server, or a generic "my node won't
+sync" question with no Bitcoin in it. The flags, argument-quoting rules, BTC-vs-satoshi
+units, exit codes, and confirmation semantics here are Bitcoin Core's; applying them to
+another tool produces confident, wrong answers.
+
+If it's genuinely ambiguous which chain is meant, ask rather than assume.
 
 `bitcoin-cli` is a thin JSON-RPC client for `bitcoind`, plus a handful of conveniences the
 node itself does not provide. This skill is about using it well from a shell: composing

@@ -39,7 +39,46 @@ fail. A description must:
   description in this repo ends with an explicit "not for X — that is `<skill>`" clause.
   This is not decoration: it is the only place the routing decision can be influenced.
 
-Descriptions can be long. Err that way.
+Descriptions can be long, but not unlimited — see the budget below.
+
+### Precision beats recall, and there is a hard length budget
+
+A description is truncated around **1500 characters** when skills are listed. `claude
+plugin validate --strict` does **not** catch this, so it fails silently — and what gets cut
+is the tail, which is exactly where the boundary clause lives. **Budget 1450 characters**
+and re-measure after every edit:
+
+```bash
+python3 -c "import pathlib,re,sys; d=re.search(r'^description: (.*)$', pathlib.Path(sys.argv[1]).read_text(), re.M).group(1); print(len(d))" plugins/<name>/skills/<name>/SKILL.md
+```
+
+That budget forces a choice, and this repo resolves it toward **precision**. Generic
+no-jargon triggers ("check if my node is synced", "my app can't reach my node", "do I need
+Docker for this") fire on Ethereum, Solana, Kubernetes, and plain web servers. They are the
+first thing to cut, and they buy the room for two things worth more:
+
+- **A conditional clause.** Keep a generic phrasing as a trigger, but qualify it:
+  *"ONLY once Bitcoin is named or already established in context, also triggers on …"*.
+  Recall in a real Bitcoin conversation is preserved; a cold false positive is not.
+- **A negative gate.** State what must not load it:
+  *"Bitcoin Core only — do NOT load for Ethereum, Solana, or any other chain, or for
+  non-blockchain nodes and servers."*
+
+`money` is the deliberate exception: it gates on **homonyms** (software immutability, legal
+covenants, NFT fungibility) rather than on Bitcoin, because monetary theory generally —
+gold and fiat included — is genuinely in scope.
+
+### Back the description with a body guard
+
+The description prevents the *load*. It cannot prevent *misapplication* once loaded, so
+every `SKILL.md` also opens with a `## Preconditions` block, immediately after the H1: what
+the skill assumes, what to stop on, and an instruction to ask rather than assume when it's
+ambiguous. Keep it to a short paragraph — it is paid for on every load.
+
+Then prove both work: ship a **negative eval** (see `evals/*-declines/`) whose prompt is
+dense with the skill's own trigger vocabulary but about the wrong subject, graded on whether
+the skill declines and redirects rather than translating its material across. Without one,
+the gating rots the first time someone adds a trigger.
 
 ## Skills here are a system, not a pile
 
@@ -79,6 +118,11 @@ Before you open a PR:
 - [ ] `claude plugin validate . --strict` passes
 - [ ] `SKILL.md` frontmatter has a `name` and a trigger-rich `description` (see above)
 - [ ] The `description` ends with an explicit boundary clause naming the sibling skills
+- [ ] The `description` is **≤ 1450 characters** (measured, not estimated)
+- [ ] Generic triggers are either cut or qualified with the "ONLY once … in context" clause
+- [ ] The `description` carries a negative gate saying what must *not* load it
+- [ ] `## Preconditions` block sits immediately after the H1
+- [ ] A negative eval case exists proving the skill declines an out-of-subject prompt
 - [ ] `## Scope` says what the skill does *not* cover
 - [ ] `## Related skills` gives the handoff table, in both directions
 - [ ] Any topic shared with another skill has an owner, recorded in the root `README.md`

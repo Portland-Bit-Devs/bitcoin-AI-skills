@@ -1,9 +1,27 @@
 ---
 name: money
-description: Use when the conversation turns on what money *is* rather than on a specific tool or transaction — defining money, salability, the three functions (store of value, medium of exchange, unit of account), the six properties of a monetary good (scarcity, durability, acceptability, portability, divisibility, fungibility), the seventh property — "immutability through decentralization" — monetary value vs. market value, why money does or doesn't need to be "backed" by something, or comparing candidate monies (gold, fiat currency, bitcoin) against those criteria. Triggers on "what is money", "is X money", "why does money have value", "sound money", "store of value", "medium of exchange", "unit of account", "salability", "hard money", "immutability", "immutability through decentralization", "fungibility", "tainted coins", "covenants", "what backs the dollar", "who controls the money supply", "are all bitcoin the same", "why is inflation bad", and on framing questions like "explain why bitcoin is or isn't money", "what makes something a good currency", or "how did money come about in the first place". Not for running Bitcoin software or making a transaction — that is `bitcoin-install`, `bitcoin-cli`, and `bitcoin-api`; when a claim about what Bitcoin's code actually enforces needs checking against the source, hand off to `bitcoin-code`. Never gives investment advice or price predictions.
+description: Use when the conversation turns on what money *is* rather than on a specific tool or transaction — defining money, salability, the three functions (store of value, medium of exchange, unit of account), the six properties of a monetary good (scarcity, durability, acceptability, portability, divisibility, fungibility), the seventh property — "immutability through decentralization" — monetary value vs. market value, why money does or doesn't need to be "backed" by something, or comparing candidate monies — gold, fiat, bitcoin — against those criteria. Monetary theory generally is in scope; this is not a Bitcoin-only skill. Triggers on "what is money", "is X money", "why does money have value", "sound money", "store of value", "medium of exchange", "unit of account", "salability", "immutability through decentralization", "monetary fungibility", "covenants and fungibility", "tainted coins", "what backs the dollar", "who controls the money supply", "are all bitcoin the same", "why is inflation bad". Do NOT load for these same words used outside monetary theory — "immutability" of software, data structures, or infrastructure; "covenants" in law, real estate, or debt; "fungibility" of NFTs, tokens, or inventory. Not for running Bitcoin software — that is `bitcoin-install`, `bitcoin-cli`, `bitcoin-api`; verify claims about what Bitcoin's code enforces with `bitcoin-code`. Never gives investment advice or price predictions.
 ---
 
 # Money
+
+## Preconditions
+
+This skill is about **monetary theory** — money as a role a good occupies. That includes
+gold and fiat as much as bitcoin; it is deliberately not Bitcoin-only.
+
+What it is *not* about is the same vocabulary borrowed by other fields. Stop and say so in
+one line if the question is really about:
+
+| The word | Used to mean | Which is not this skill |
+|---|---|---|
+| **immutability** | immutable data structures, immutable infrastructure, append-only logs | a software property |
+| **covenants** | debt covenants, restrictive covenants in property or employment law | a legal instrument |
+| **fungibility** | NFTs and token standards, interchangeable inventory or parts | a different domain's usage |
+| **store of value** | a database, a cache, a storage tier | infrastructure |
+
+If it's genuinely ambiguous, ask rather than assume — and note that a question can be
+legitimately monetary without mentioning bitcoin at all.
 
 Money is not a category of thing — it is a role that some good comes to occupy. This
 skill supplies the framework for reasoning about that role precisely, so that "is X

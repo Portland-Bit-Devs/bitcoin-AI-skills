@@ -1,9 +1,21 @@
 ---
 name: bitcoin-code
-description: Use when researching how Bitcoin actually works at the implementation and specification level — locating where a consensus rule, policy check, or behaviour lives in the Bitcoin Core source, tracing a code path, finding when and why something changed, reading a BIP, or mapping a BIP onto the code that implements it. Covers setting up local clones of bitcoin/bitcoin and bitcoin/bips, wiring clangd for go-to-definition, the source tree layout, git archaeology (`git log -S`, `git blame`, release tags), pull-request and review history via `gh`, and Core's own `doc/bips.md` and `doc/AI_POLICY.md`. Triggers on mentions of bitcoin/bitcoin, Bitcoin Core source, validation.cpp, script interpreter, mempool policy, consensus rules in code, a symbol like CheckBlock/ConnectBlock/EvalScript/MAX_MONEY, a BIP number, a Core PR number, and on questions phrased without any of those — "where is the 21 million cap enforced", "when did this rule change and why", "how does Core decide to relay a transaction", "show me how signature verification actually works", "which release shipped taproot", "what does this PR change", "is this behaviour consensus or policy", "clone the bitcoin source", "set up a language server for the bitcoin code". Read-only research: it never opens or drives pull requests, per Core's `doc/AI_POLICY.md`. Not for running or driving a node — that is `bitcoin-cli`, `bitcoin-api`, and `bitcoin-install`; not for monetary theory — that is `money`.
+description: Use when researching how Bitcoin actually works at the implementation and specification level — locating where a consensus rule, policy check, or behaviour lives in the Bitcoin Core source, tracing a code path, finding when and why something changed, reading a BIP, or mapping a BIP onto the code that implements it. Covers local clones of bitcoin/bitcoin and bitcoin/bips, wiring clangd for go-to-definition, the source tree layout, git archaeology (`git log -S`, `git blame`, release tags), PR and review history via `gh`, and Core's `doc/bips.md` and `doc/AI_POLICY.md`. Triggers on bitcoin/bitcoin, Bitcoin Core source, validation.cpp, script interpreter, mempool policy, a symbol like CheckBlock/ConnectBlock/EvalScript/MAX_MONEY, a BIP number, a Core PR number, "where is the 21 million cap enforced", "how does Core decide to relay a transaction", "which release shipped taproot", "is this behaviour consensus or policy", "clone the bitcoin source". ONLY once Bitcoin is named or already established in context, also triggers on "when did this rule change and why" and "what does this PR change". Bitcoin Core and the BIPs only — do NOT load for another chain's source, or for generic code-reading, git-archaeology, or PR-review questions. Read-only: never opens or drives pull requests, per `doc/AI_POLICY.md`. Not for running a node — that is `bitcoin-cli`, `bitcoin-api`, `bitcoin-install`; not for monetary theory — that is `money`.
 ---
 
 # bitcoin-code
+
+## Preconditions
+
+This skill is about the **`bitcoin/bitcoin` and `bitcoin/bips` repositories**. Confirm that
+before using it.
+
+Stop and say so in one line if the subject is another chain's source (go-ethereum, a
+Bitcoin fork such as BCH or BSV, an altcoin's consensus code), or a generic code-reading,
+`git blame`, or PR-review question that happens to use this skill's vocabulary. The tree
+map, the consensus/policy split, and every symbol named here are Core's.
+
+If it's genuinely ambiguous which repository is meant, ask rather than assume.
 
 Research tooling for the Bitcoin implementation and its specifications. Two repositories
 answer most questions:
