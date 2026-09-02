@@ -5,7 +5,7 @@
     "name": "Jon Austen"
   },
   "metadata": {
-    "description": "A marketplace of self-owned, openly licensed Agent Skills for working with Bitcoin \u2014 the software, the protocol, and the money.",
+    "description": "A marketplace of self-owned, openly licensed Agent Skills for working with Bitcoin — the software, the protocol, and the money.",
     "version": "0.1.0"
   },
   "plugins": [
@@ -26,6 +26,31 @@
         "json-rpc",
         "node",
         "regtest"
+      ]
+    },
+    {
+      "name": "bitcoin-api",
+      "source": "./plugins/bitcoin-api",
+      "description": "Talk to a Bitcoin Core node over its own network interfaces: JSON-RPC over HTTP, the unauthenticated REST interface, and ZMQ notifications — authentication, endpoints, parameters, batching, and error codes.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jon Austen"
+      },
+      "license": "GPL-3.0",
+      "category": "development",
+      "keywords": [
+        "bitcoin",
+        "bitcoin-core",
+        "json-rpc",
+        "rpc",
+        "rest",
+        "zmq",
+        "http",
+        "api",
+        "curl",
+        "postman",
+        "rpcauth",
+        "node"
       ]
     },
     {
@@ -56,7 +81,7 @@
     {
       "name": "bitcoin-code",
       "source": "./plugins/bitcoin-code",
-      "description": "Read and explain the Bitcoin Core source tree \u2014 locate consensus rules, validation, policy, and wallet code in github.com/bitcoin/bitcoin and answer questions with file:line evidence.",
+      "description": "Read and explain the Bitcoin Core source tree — locate consensus rules, validation, policy, and wallet code in github.com/bitcoin/bitcoin and answer questions with file:line evidence.",
       "version": "0.1.0",
       "author": {
         "name": "Jon Austen"

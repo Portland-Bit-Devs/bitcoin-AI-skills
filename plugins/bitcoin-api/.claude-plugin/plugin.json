@@ -1,0 +1,25 @@
+{
+  "name": "bitcoin-api",
+  "description": "Talk to a Bitcoin Core node over its own network interfaces: JSON-RPC over HTTP, the unauthenticated REST interface, and ZMQ notifications — authentication, endpoints, parameters, batching, and error codes.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jon Austen"
+  },
+  "homepage": "https://github.com/austenjt/bitcoin-AI-skills",
+  "repository": "https://github.com/austenjt/bitcoin-AI-skills",
+  "license": "GPL-3.0",
+  "keywords": [
+    "bitcoin",
+    "bitcoin-core",
+    "json-rpc",
+    "rpc",
+    "rest",
+    "zmq",
+    "http",
+    "api",
+    "curl",
+    "postman",
+    "rpcauth",
+    "node"
+  ]
+}
