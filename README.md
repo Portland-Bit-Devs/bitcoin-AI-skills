@@ -24,7 +24,7 @@ Or browse everything with `/plugin` → **Discover** inside Claude Code.
 | Plugin | What it covers | Status |
 |---|---|---|
 | [`bitcoin-install`](plugins/bitcoin-install) | Installing Bitcoin Core on macOS — the Homebrew formula vs. cask, the Qt desktop node, and Polar + Docker regtest | ✅ v0.1 |
-| [`bitcoin-cli`](plugins/bitcoin-cli) | Driving a Bitcoin Core node from the shell — RPC calls, wallets, regtest | 🚧 stub |
+| [`bitcoin-cli`](plugins/bitcoin-cli) | Driving a Bitcoin Core node from the shell — flags, argument quoting, reading output, regtest | ✅ v0.1 |
 | [`bitcoin-api`](plugins/bitcoin-api) | Talking to a node over the wire — JSON-RPC over HTTP, the REST interface, and ZMQ notifications | ✅ v0.1 |
 | [`money`](plugins/money) | What money is: salability, the three functions, the six properties, and the seventh — *immutability through decentralization* | ✅ v0.1 |
 | [`bitcoin-code`](plugins/bitcoin-code) | Reading the Bitcoin Core source tree, with a read-only source-reader agent | 🚧 stub |

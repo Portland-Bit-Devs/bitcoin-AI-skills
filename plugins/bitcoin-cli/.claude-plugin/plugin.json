@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-cli",
-  "description": "Drive a Bitcoin Core node from the command line: bitcoin-cli invocation, JSON-RPC methods, wallet and chainstate queries, and reading the results correctly.",
+  "description": "Drive a Bitcoin Core node from the command line: bitcoin-cli flags and network selection, argument quoting, reading output and exit codes, BTC-vs-satoshi units and fee math, and the regtest workflow.",
   "version": "0.1.0",
   "author": {
     "name": "Jon Austen"

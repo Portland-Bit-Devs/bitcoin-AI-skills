@@ -1,39 +1,116 @@
 ---
 name: bitcoin-cli
-description: Use when interacting with a Bitcoin Core node from the shell — running `bitcoin-cli` or raw JSON-RPC, querying chain state, inspecting blocks and transactions, managing wallets, or setting up regtest/signet for testing. Triggers on explicit mentions of bitcoin-cli, bitcoind, Bitcoin Core RPC, getblockchaininfo, getrawtransaction, listunspent, or bitcoin.conf, and also on task descriptions that imply them without naming them — "check if my node is synced", "look up this txid", "spin up a local Bitcoin network to test against", "why is my transaction still unconfirmed", "how much is in this wallet".
+description: Use when driving a Bitcoin Core node from a terminal or a shell script with `bitcoin-cli` — composing a command, quoting its arguments, reading what comes back, or building a pipeline with `jq`. Covers connection and network flags (`-regtest`, `-signet`, `-testnet4`, `-datadir`, `-conf`, `-rpcwallet`, `-rpcwait`, `-rpcconnect`), the client-only helpers with no RPC equivalent (`-getinfo`, `-netinfo`, `-addrinfo`, `-generate`), positional vs. `-named` arguments and the per-method JSON conversion that makes some arguments need quotes and others not, passing secrets via `-stdin`/`-stdinrpcpass`/`-stdinwalletpassphrase`, exit codes and stderr, output shapes (bare strings vs. pretty JSON), BTC-vs-satoshi units and float-precision hazards, `vout` structure, fee math, confirmation semantics, and the regtest mine-and-fund workflow. Triggers on "bitcoin-cli", "bitcoind", "getblockchaininfo", "getrawtransaction", "listunspent", "generatetoaddress", "bitcoin-cli error parsing JSON", "bitcoin-cli exit code", and on task phrasings that never name the tool — "check if my node is synced", "look up this txid", "how much is in this wallet", "why is my transaction still unconfirmed", "what fee did I pay", "spin up a local Bitcoin network to test against", "mine some coins to test with", "script this against my node".
 ---
 
 # bitcoin-cli
 
-> **Status: stub.** Structure is in place; the reference material is not written yet.
-
-Working with a Bitcoin Core node means talking to `bitcoind` over JSON-RPC, usually
-through the `bitcoin-cli` wrapper. This skill is for getting those calls right and
-reading the responses correctly.
+`bitcoin-cli` is a thin JSON-RPC client for `bitcoind`, plus a handful of conveniences the
+node itself does not provide. This skill is about using it well from a shell: composing
+commands, surviving the quoting rules, and reading the output correctly.
 
 ## Scope
 
-- Invoking `bitcoin-cli` — connection flags, `bitcoin.conf`, cookie vs. rpcuser auth
-- The RPC surface: chain/block/transaction queries, mempool, wallet, network
-- Network selection: mainnet, testnet, signet, regtest
-- Reading results: units (BTC vs. satoshis), hex vs. verbose forms, confirmation semantics
+- Invocation: connection flags, network selection, wallet selection, secrets
+- The client-only helpers: `-getinfo`, `-netinfo`, `-addrinfo`, `-generate`
+- Arguments: positional vs. `-named`, and **why some need quotes and others don't**
+- Output: shapes, exit codes, units, `vout`, fees, confirmations, `jq` pipelines
+- The regtest workflow: mine, fund, spend, throw away
 
-Out of scope: compiling Bitcoin Core (see `bitcoin-code`), and monetary theory (see `money`).
+Out of scope, with the skill that covers each:
+
+| Topic | Skill |
+|---|---|
+| The HTTP wire protocol, auth mechanisms, RPC error-code tables | **`bitcoin-api`** |
+| Installing Bitcoin Core, `bitcoind` first run, Polar | **`bitcoin-install`** |
+| How Core implements any of this | **`bitcoin-code`** |
+| Monetary theory | **`money`** |
+
+The split with `bitcoin-api` is worth stating plainly: **that skill owns the wire, this one
+owns the program.** When a call fails with a numeric RPC code, the code's meaning lives in
+`bitcoin-api`; how `bitcoin-cli` surfaces it — stderr, exit status — lives here.
+
+## The 30-second version
+
+```bash
+bitcoin-cli getblockchaininfo          # mainnet, cookie auth, zero configuration
+bitcoin-cli -getinfo                   # the human summary
+bitcoin-cli -regtest -generate 101     # private chain: mine 101 blocks to a new address
+bitcoin-cli help sendtoaddress         # authoritative, version-correct, always available
+```
+
+`bitcoin-cli` finds the data directory and the cookie on its own. If the node is up and on
+the default network, nothing needs configuring.
+
+Three things account for most confusion, and each has a reference file:
+
+1. **Quoting.** `getblock <hash>` needs no quotes, `getblockhash abc` fails locally with
+   `error parsing JSON`, and JSON arguments need quotes *inside* shell quotes. There is a
+   rule — see `references/arguments.md`.
+2. **Output is not always JSON.** Single values print bare, with no quotes, which is a
+   feature for shell use and a surprise for `jq`. See `references/output.md`.
+3. **`-getinfo` and friends are not RPC methods.** They are client-side, so `help` won't
+   describe them and they can't be called over HTTP. See `references/invocation.md`.
+
+## How to use this skill
+
+**Use `help` before guessing.** `bitcoin-cli help <method>` is generated from the running
+node's own source, so it is correct for *that* version — better than any documentation
+including this skill. When a signature matters, read it there.
+
+**Prefer `-named`.** Positional arguments break silently when a parameter is inserted into
+a signature between releases; named ones don't. `bitcoin rpc` is shorthand for
+`bitcoin-cli -named`.
+
+**Always pass `-rpcwallet=` when a wallet is involved**, even with one wallet loaded. It
+costs nothing and makes the command keep working when a second wallet appears.
+
+**Read amounts carefully.** RPC amounts are in **BTC**, not satoshis. Core prints them at
+a fixed 8 decimal places (`-0.00001650`), but they are JSON *numbers* — the moment a parser
+reads one into a binary float, you can get `-1.65e-05` and arithmetic error. Convert to
+integer satoshis and round. See `references/output.md`.
+
+**Reach for regtest.** Anything exploratory, anything destructive, anything you want to run
+twice belongs on a private chain. See `references/regtest.md`.
 
 ## Safety
 
-Bitcoin operations move real, irreversible value. Before running anything:
+`bitcoin-cli` spends money. It has no confirmation prompt and no undo.
 
-- **Never** run commands that spend, send, or sign against mainnet on a user's behalf
-  without explicit, specific confirmation of the exact amount and destination.
+- **Never run a spending or signing command against mainnet without explicit, per-command
+  confirmation of the exact amount and destination.** That covers `sendtoaddress`,
+  `sendmany`, `send`, `sendall`, `sendrawtransaction`, `signrawtransactionwithwallet`,
+  `signrawtransactionwithkey`, `walletcreatefundedpsbt`, and `bumpfee`. Read-only queries
+  need no such ceremony.
+- **`-generate` and `generatetoaddress` are regtest tools.** Always pass `-regtest`.
+- **Never run `dumpwallet`, `dumpprivkey`, `listdescriptors true`, or
+  `gettransaction`-with-private-data on a user's behalf**, and never write their output
+  anywhere. They return private keys.
+- **Never put a passphrase or RPC password in a command line.** It lands in your shell
+  history and in `ps` output for every user on the machine. Use `-stdin`,
+  `-stdinrpcpass`, and `-stdinwalletpassphrase` — see `references/invocation.md`.
+- **`walletpassphrase` unlocks for a duration.** Lock it again with `walletlock` rather
+  than leaving a wallet open.
 - Prefer regtest or signet for anything exploratory.
-- Treat wallet files, descriptors, xprvs, and seed phrases as secrets — never echo them,
-  never write them to logs or scratch files.
 
-## TODO
+## Reference material
 
-- [ ] `references/rpc-methods.md` — the commonly used RPC calls, grouped by task
-- [ ] `references/setup.md` — `bitcoin.conf`, auth, pruning, indexes (`txindex`)
-- [ ] `references/regtest.md` — spin up a local chain, mine blocks, fund addresses
-- [ ] `references/reading-output.md` — units, `vout` structure, fee math, confirmation depth
-- [ ] `evals/evals.json` — cases covering a chain query, a wallet query, and a regtest setup
+Load on demand. Each file opens with a "Read this when" note and its own contents table.
+
+| File | Read it when | Verified? |
+|---|---|---|
+| `references/invocation.md` | Choosing flags — network, datadir, wallet, waiting, secrets | **yes** |
+| `references/arguments.md` | A command won't parse, or you're quoting JSON | **yes** |
+| `references/output.md` | Reading results — shapes, exit codes, units, fees, `jq` | **yes** |
+| `references/regtest.md` | You want a private chain to mine on and throw away | **yes** |
+| `references/recipes.md` | You have a task, not a question | **yes** |
+| `references/sources.md` | Checking a claim, or editing this skill | — |
+
+**yes** means the commands and their output were run against a real Bitcoin Core v31.1
+node. `sources.md` records exactly what.
+
+## Status
+
+Written and verified against **Bitcoin Core v31.1.0** on macOS — read-only commands against
+a mainnet node, and the full write path (wallets, mining, spending, fee inspection) against
+a regtest node. Where behaviour is version-sensitive, the reference files say so.
