@@ -134,6 +134,12 @@ answer. For a laptop where you sometimes open the app, it is a trap.
 Regtest is a private chain where you mine blocks instantly and coins are worthless. It is
 the correct place to develop, and it costs nothing to throw away.
 
+> **Where this stops.** This section gets a regtest node *running*. The workflow on top of
+> it — funding a wallet, why it takes 101 blocks and not 100, spending, controlling time,
+> reorgs, connecting two nodes, tearing down — belongs to the **`bitcoin-cli`** skill and
+> its regtest reference. Go there next rather than expecting it here. For a regtest chain
+> with **Lightning** nodes attached, stay in this skill and see `references/polar.md`.
+
 Use a dedicated data directory so it can never touch your real one:
 
 ```bash

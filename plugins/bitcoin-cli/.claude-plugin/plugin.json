@@ -12,8 +12,11 @@
     "bitcoin",
     "bitcoin-cli",
     "bitcoin-core",
-    "json-rpc",
-    "node",
-    "regtest"
+    "command-line",
+    "shell",
+    "jq",
+    "regtest",
+    "wallet",
+    "rpc"
   ]
 }

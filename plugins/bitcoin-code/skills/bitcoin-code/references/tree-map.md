@@ -86,7 +86,7 @@ The few worth knowing by name:
 | `src/validation.cpp` | The largest and most important file. Block and transaction validation, chain state, the mempool acceptance path |
 | `src/net_processing.cpp` | P2P message handling — what the node does with what peers send |
 | `src/script/interpreter.cpp` | The script engine. `EvalScript` is the opcode loop |
-| `src/consensus/tx_check.cpp` | Context-free transaction checks, including the money-range test |
+| `src/consensus/tx_check.cpp` | Context-free transaction checks, including the money-range test (`MAX_MONEY`, defined in `src/consensus/amount.h` — the citation the **`money`** skill needs for the 21 million cap) |
 | `src/kernel/chainparams.cpp` | Network parameters, activation heights, checkpoints, seeds |
 | `src/init.cpp` | Startup, and the authoritative list of config options |
 | `src/rpc/`, `src/wallet/rpc/` | Where every RPC method is defined, with its help text |

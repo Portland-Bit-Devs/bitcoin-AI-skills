@@ -25,4 +25,22 @@ restated here in our own words with attribution — no source text is reproduced
 anthropological counter-argument (Graeber) so the skill doesn't present one side of a live
 disagreement as settled.
 
+## Relationship to the other skills
+
+`money` is the only skill in this marketplace that isn't about software, and the boundary
+is deliberate. It supplies the *framework*; it does not run anything and it does not
+adjudicate what Bitcoin's code does.
+
+- Operational questions — installing, running, spending, querying — hand off to
+  [`bitcoin-install`](../bitcoin-install), [`bitcoin-cli`](../bitcoin-cli), and
+  [`bitcoin-api`](../bitcoin-api).
+- Factual claims about Bitcoin — the 21 million cap, protocol-layer fungibility, what
+  covenants would change — hand off to [`bitcoin-code`](../bitcoin-code) for a `file:line`
+  citation at a pinned ref. The skill delegates these rather than asserting them from
+  memory, and its reference files carry explicit *"verify, don't assert"* callouts at each
+  such claim.
+
+Coming the other way, the software skills hand off here when a question drifts from *how*
+to *why does this matter* or *is bitcoin money*.
+
 Licensed GPL-3.0. See the [repository root](../../README.md).

@@ -1,6 +1,6 @@
 ---
 name: bitcoin-code
-description: Use when researching how Bitcoin actually works at the implementation and specification level — locating where a consensus rule, policy check, or behaviour lives in the Bitcoin Core source, tracing a code path, finding when and why something changed, reading a BIP, or mapping a BIP onto the code that implements it. Covers setting up local clones of github.com/bitcoin/bitcoin and github.com/bitcoin/bips, wiring clangd so go-to-definition and find-references work, the source tree layout, git archaeology (`git log -S`, `git blame`, release tags), pull-request and review history via `gh`, and Core's own `doc/bips.md` and `doc/AI_POLICY.md`. Triggers on mentions of bitcoin/bitcoin, Bitcoin Core source, validation.cpp, script interpreter, mempool policy, consensus rules in code, a symbol like CheckBlock/ConnectBlock/EvalScript/MAX_MONEY, a BIP number, a Core PR number, and on questions phrased without any of those — "where is the 21 million cap enforced", "when did this rule change and why", "how does Core decide to relay a transaction", "show me how signature verification actually works", "which release shipped taproot", "what does this PR change", "is this behaviour consensus or policy", "clone the bitcoin source", "set up a language server for the bitcoin code".
+description: Use when researching how Bitcoin actually works at the implementation and specification level — locating where a consensus rule, policy check, or behaviour lives in the Bitcoin Core source, tracing a code path, finding when and why something changed, reading a BIP, or mapping a BIP onto the code that implements it. Covers setting up local clones of bitcoin/bitcoin and bitcoin/bips, wiring clangd for go-to-definition, the source tree layout, git archaeology (`git log -S`, `git blame`, release tags), pull-request and review history via `gh`, and Core's own `doc/bips.md` and `doc/AI_POLICY.md`. Triggers on mentions of bitcoin/bitcoin, Bitcoin Core source, validation.cpp, script interpreter, mempool policy, consensus rules in code, a symbol like CheckBlock/ConnectBlock/EvalScript/MAX_MONEY, a BIP number, a Core PR number, and on questions phrased without any of those — "where is the 21 million cap enforced", "when did this rule change and why", "how does Core decide to relay a transaction", "show me how signature verification actually works", "which release shipped taproot", "what does this PR change", "is this behaviour consensus or policy", "clone the bitcoin source", "set up a language server for the bitcoin code". Read-only research: it never opens or drives pull requests, per Core's `doc/AI_POLICY.md`. Not for running or driving a node — that is `bitcoin-cli`, `bitcoin-api`, and `bitcoin-install`; not for monetary theory — that is `money`.
 ---
 
 # bitcoin-code
@@ -25,14 +25,27 @@ and the deployed software is the thing miners and nodes run. Say which one you a
 - Pull requests and review history via `gh`
 - BIPs: reading them, and mapping BIP ↔ implementing code
 
-Out of scope, with the skill that covers each:
+## Related skills
 
-| Topic | Skill |
+This skill owns **the source and the specifications** — what the code says, at a named ref,
+with `file:line` evidence.
+
+| When the question moves to… | Hand off to |
 |---|---|
-| Running a node, `bitcoin-cli` | **`bitcoin-cli`** |
-| The RPC/REST/ZMQ interfaces | **`bitcoin-api`** |
-| Installing Bitcoin Core to *use* it | **`bitcoin-install`** |
-| Monetary theory | **`money`** |
+| Running a node, composing commands, reading output | **`bitcoin-cli`** |
+| The RPC / REST / ZMQ interfaces as *interfaces* | **`bitcoin-api`** |
+| Installing Bitcoin Core in order to *use* it | **`bitcoin-install`** |
+| Whether any of this is *money* | **`money`** |
+
+This is the **terminal skill** for evidence: every other skill in this marketplace hands
+off here when an answer stops being "what does the tool do" and becomes "what does the code
+enforce, and since when". Concretely — `bitcoin-cli` and `bitcoin-api` send you here for
+the rule behind a result or an error, and `money` sends you here whenever a claim about
+Bitcoin's supply, fungibility, or immutability needs checking against the source instead of
+being asserted. Answer those with a citation, then hand the conversation back.
+
+The clone this skill sets up is a research asset the whole marketplace shares — once it
+exists, prefer it over recalling Core's behaviour from memory anywhere.
 
 ## Ground rules
 
@@ -79,6 +92,21 @@ It permits AI as a coding tool but draws hard lines that this skill must respect
 contribution *for a human who will understand and own it* is fine. Opening or driving a PR,
 or ghost-writing review comments, is not. If a user asks for that, say so plainly and point
 them at the policy rather than complying.
+
+## Safety
+
+This skill reads; it does not write. The risks are to the user's checkout and to their
+standing with upstream, not to their money.
+
+- **Never modify a user's clone.** No commits, no pushes, no `fetch` into their checkout,
+  no changing their checked-out ref, no builds. If a stale clone is a problem, say so and
+  let them update it. A user may have work in progress you cannot see.
+- **Never open, comment on, or drive a pull request or issue upstream**, per Core's
+  `doc/AI_POLICY.md` — see above. Drafting for a human who will own the result is fine.
+- **Never state a `file:line`, a constant, or a behaviour without having read it** at a
+  named ref. Inventing a plausible path is worse than saying you don't know: this codebase
+  is quoted in arguments about money.
+- **Cloning is a multi-hundred-MB fetch.** Ask first, and ask where it should go.
 
 ## How to use this skill
 

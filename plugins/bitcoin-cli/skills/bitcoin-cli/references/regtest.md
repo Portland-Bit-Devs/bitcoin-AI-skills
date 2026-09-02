@@ -2,6 +2,11 @@
 
 > **Read this when** you want a private chain you control — to mine on, spend on, break,
 > and throw away. This is where anything exploratory belongs.
+>
+> **Assumes** `bitcoind` and `bitcoin-cli` are installed and on your PATH. If they aren't,
+> that's the **`bitcoin-install`** skill — and if you want Lightning nodes wired to the
+> chain rather than bare bitcoind, its Polar reference is the shortcut. Both live in that
+> skill, not this one.
 
 **In this file**
 

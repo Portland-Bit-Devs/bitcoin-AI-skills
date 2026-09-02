@@ -35,9 +35,42 @@ fail. A description must:
   should trigger on "why is my transaction stuck," not only on "fee estimation."
 - **Name the concrete symbols** a user might mention — RPC methods, file names, BIP
   numbers, function names.
-- **Say what's out of scope**, and point at the skill that does cover it.
+- **Say what's out of scope**, and point at the skill that does cover it. Every
+  description in this repo ends with an explicit "not for X — that is `<skill>`" clause.
+  This is not decoration: it is the only place the routing decision can be influenced.
 
 Descriptions can be long. Err that way.
+
+## Skills here are a system, not a pile
+
+Five plugins that each answer "bitcoin?" will fight each other for every question. The way
+out is that **each skill owns exactly one layer**, and says so:
+
+| Skill | Owns |
+|---|---|
+| `bitcoin-install` | the machine |
+| `bitcoin-cli` | the program |
+| `bitcoin-api` | the wire |
+| `bitcoin-code` | the source — and it is the terminal skill for *evidence* |
+| `money` | the framework |
+
+Three rules keep that true, and a new skill has to satisfy all three:
+
+1. **Declare the boundary in the `description`.** See above.
+2. **Ship a `## Related skills` section** in `SKILL.md`, immediately after `## Scope`. It
+   states what this skill owns in one line, then gives a two-column table — *when the
+   question moves to…* → *hand off to* — and a sentence on what gets handed **back** here.
+   Handoffs are bidirectional; a one-way "out of scope" list is not enough.
+3. **Claim a topic, or point at its owner.** If your skill touches something another skill
+   already covers — regtest, authentication, error codes, consensus vs. policy — do not
+   restate it. Add a row to the *Topic ownership* table in the root `README.md` saying who
+   owns it, and have the non-owner link across. Duplicated prose drifts; a pointer doesn't.
+
+The `bitcoin-code` rule is worth calling out separately. Any skill making a factual claim
+about what Bitcoin's code enforces should **delegate rather than assert** — hand off to
+`bitcoin-code` for a `file:line` citation at a pinned ref. `money` does this for the 21
+million cap, protocol-layer fungibility, and covenants. Recalling Core's behaviour from
+memory is how a skill ships something confidently wrong.
 
 ## Checklist
 
@@ -45,7 +78,12 @@ Before you open a PR:
 
 - [ ] `claude plugin validate . --strict` passes
 - [ ] `SKILL.md` frontmatter has a `name` and a trigger-rich `description` (see above)
-- [ ] Scope section says what the skill does *not* cover
+- [ ] The `description` ends with an explicit boundary clause naming the sibling skills
+- [ ] `## Scope` says what the skill does *not* cover
+- [ ] `## Related skills` gives the handoff table, in both directions
+- [ ] Any topic shared with another skill has an owner, recorded in the root `README.md`
+      *Topic ownership* table — and the non-owner links across instead of restating it
+- [ ] Factual claims about Bitcoin's code delegate to `bitcoin-code` rather than asserting
 - [ ] Entry added to `.claude-plugin/marketplace.json` with `description`, `category`,
       `keywords`, `version`, `author`, and `license`
 - [ ] Marketplace entry `description` and `plugin.json` `description` agree
@@ -54,7 +92,9 @@ Before you open a PR:
 - [ ] A symlink added under `.claude/skills/` (and `.claude/agents/` if the plugin ships agents)
 - [ ] At least one eval case under `evals/`, ideally three
 - [ ] A plugin `README.md`
-- [ ] Root `README.md` skills table updated
+- [ ] Root `README.md` skills table, layer diagram, and router table updated
+- [ ] `## Status` section states what was verified, against which version, and by what
+      means — and reference tables mark **yes** / **partly** / **docs only** honestly
 
 ## Names are permanent
 

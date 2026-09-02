@@ -53,6 +53,12 @@ Money works identically. The quantity of money at inception carries no informati
 change in quantity over time is what matters, because new units are claims on the same
 underlying goods, and someone receives them first.
 
+> **Verify, don't assert.** Bitcoin's 21 million cap is a claim about a specific
+> codebase, and this file is not evidence for it. When the cap is load-bearing in an
+> answer, hand off to **`bitcoin-code`** for `MAX_MONEY` in `src/consensus/amount.h` and
+> the subsidy halving schedule, at a named ref. The same goes for the issuance *rate*:
+> the schedule is code, not doctrine.
+
 This is why hard-to-produce goods have been sought as money. Gold's above-ground supply has
 grown roughly 1.5–2.5% per year — enough certainty that holders don't expect sudden
 dilution. Newly issued government money has generally grown considerably faster.
@@ -96,6 +102,12 @@ inputs exist, are unspent, and are correctly authorized — nothing else. No con
 assigns a coin a provenance score, and no valid satoshi is worth less to a node than any
 other. At this layer bitcoin is fully fungible, and that is a deliberate design property,
 not an accident.
+
+> **Verify, don't assert.** "No consensus rule reads history" is a statement about
+> `src/consensus/` and the script interpreter. Hand off to **`bitcoin-code`** to show it
+> rather than repeating it — and note that the consensus/policy distinction matters here:
+> a node's *relay* policy may well treat outputs differently without any consensus rule
+> doing so.
 
 ### Social layer: broken in practice
 
@@ -163,6 +175,11 @@ The fungibility question turns on **recursion**:
   spent. `OP_CHECKTEMPLATEVERIFY` (BIP 119) is the canonical example — it commits to a
   specific template for the next transaction.
 - **Recursive** covenants can re-impose themselves on every subsequent spend, indefinitely.
+
+> **Verify, don't assert.** Covenant proposals move. Before characterising any of them —
+> BIP 119 included — hand off to **`bitcoin-code`** for the BIP text, its current status,
+> and whether Core implements it (`doc/bips.md`). BIP statuses were re-vocabularied when
+> BIP 3 replaced BIP 2, so a remembered status is very likely wrong.
 
 Recursion is what would introduce a genuinely new failure mode: coins that are permanently
 restricted at the protocol level — a class of bitcoin that can only ever move within a

@@ -1,6 +1,6 @@
 ---
 name: bitcoin-api
-description: Use when talking to a Bitcoin Core node over its network interfaces rather than through the `bitcoin-cli` wrapper — building or debugging JSON-RPC calls over HTTP, the unauthenticated REST interface, or ZMQ notifications, from curl, Postman, or application code in any language. Covers RPC authentication (the `.cookie` file, `rpcauth`, `rpcuser`/`rpcpassword`), the `/` and `/wallet/<name>` endpoints, positional vs. named parameters and the `args` convention, JSON-RPC 1.1 vs. 2.0 differences, batching, HTTP status and RPC error codes (-28 warmup, -18 wallet not found, -19 wallet not specified, -5, -8, -32601), `rpcbind`/`rpcallowip`/`rpcworkqueue` configuration, `/rest/` paths, and `-zmqpubrawblock`/`-zmqpubsequence` topics. Triggers on "bitcoin RPC", "bitcoind JSON-RPC", "curl my bitcoin node", "connect to Bitcoin Core from Python/Node/Go", "Postman bitcoin", "401 Unauthorized from bitcoind", "connection refused on 8332", "which port is regtest RPC", "how do I authenticate to my node", "getblockchaininfo over HTTP", "REST interface", "rest/chaininfo.json", "ZMQ notifications", "get notified when a new block arrives", "watch the mempool from my app", and on phrasings that never name the protocol — "my app can't reach my node", "how do I read my node from a script", "poll for new transactions".
+description: Use when talking to a Bitcoin Core node over its network interfaces rather than through the `bitcoin-cli` wrapper — building or debugging JSON-RPC calls over HTTP, the unauthenticated REST interface, or ZMQ notifications, from curl, Postman, or application code in any language. Covers RPC authentication (the `.cookie` file, `rpcauth`, `rpcuser`/`rpcpassword`), the `/` and `/wallet/<name>` endpoints, positional vs. named parameters and the `args` convention, JSON-RPC 1.1 vs. 2.0 differences, batching, HTTP status and RPC error codes (-28 warmup, -18 wallet not found, -19 wallet not specified, -5, -8, -32601), `rpcbind`/`rpcallowip`/`rpcworkqueue`, `/rest/` paths, and ZMQ topics. Triggers on "bitcoin RPC", "bitcoind JSON-RPC", "curl my bitcoin node", "connect to Bitcoin Core from Python/Node/Go", "Postman bitcoin", "401 Unauthorized from bitcoind", "connection refused on 8332", "which port is regtest RPC", "getblockchaininfo over HTTP", "rest/chaininfo.json", "ZMQ notifications", "get notified when a new block arrives", "watch the mempool from my app", and on phrasings that never name the protocol — "my app can't reach my node", "how do I read my node from a script", "poll for new transactions". Not for driving the node from a shell or writing `jq` pipelines — that is `bitcoin-cli`; not for installing or first-running Core — that is `bitcoin-install`; not for how Core implements any of this — that is `bitcoin-code`; not for third-party explorer APIs such as mempool.space.
 ---
 
 # bitcoin-api
@@ -28,10 +28,30 @@ doesn't work.
 - ZMQ notifications: topics, message framing, and their delivery guarantees (there are none)
 - Calling all of the above from application code
 
-Out of scope: driving the node from a shell with `bitcoin-cli` (see `bitcoin-cli`), how
-the node implements any of this (see `bitcoin-code`), monetary theory (see `money`), and
-third-party block-explorer APIs such as mempool.space or Esplora — this skill is about
-**your** node.
+Out of scope: third-party block-explorer APIs such as mempool.space or Esplora — this
+skill is about **your** node.
+
+## Related skills
+
+This skill owns **the wire**: what crosses the socket, how it is authenticated, and what
+the response means.
+
+| When the question moves to… | Hand off to |
+|---|---|
+| Doing it from a terminal — flags, quoting, `jq`, exit codes | **`bitcoin-cli`** |
+| The node isn't installed, or Qt's RPC server is off | **`bitcoin-install`** |
+| How Core implements a rule, an error, or a limit | **`bitcoin-code`** |
+| Whether any of this is *money* | **`money`** |
+
+The split with `bitcoin-cli` is worth stating plainly: **this skill owns the wire, that one
+owns the program.** `bitcoin-cli` is a client of this interface, so everything here applies
+to it — but a numeric RPC code's *meaning* is documented here
+(`references/json-rpc.md`), while how a shell user sees it — stderr, exit status — is
+documented there.
+
+Coming the other way, `bitcoin-cli` hands off here for error codes, auth mechanisms, and
+anything leaving the terminal for application code; `bitcoin-install` hands off here when
+someone needs Bitcoin-Qt's RPC server reachable at all.
 
 ## The 30-second version
 
@@ -85,8 +105,8 @@ read private data."
 - **Never call a spending or signing method on mainnet without explicit, per-call
   confirmation of the exact amount and destination.** That covers `sendtoaddress`,
   `sendmany`, `send`, `sendall`, `walletcreatefundedpsbt`, `signrawtransactionwithwallet`,
-  `signrawtransactionwithkey`, and `sendrawtransaction`. Read-only methods are fine to run
-  freely.
+  `signrawtransactionwithkey`, `sendrawtransaction`, `bumpfee`, and `psbtbumpfee`.
+  Read-only methods are fine to run freely.
 - **Treat the cookie file and `rpcauth` string as secrets.** Pass them to `curl` via
   `--user` reading from the file; never echo them into terminal output, log files,
   scratch files, artifacts, or commit them.

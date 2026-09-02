@@ -1,6 +1,6 @@
 ---
 name: bitcoin-cli
-description: Use when driving a Bitcoin Core node from a terminal or a shell script with `bitcoin-cli` — composing a command, quoting its arguments, reading what comes back, or building a pipeline with `jq`. Covers connection and network flags (`-regtest`, `-signet`, `-testnet4`, `-datadir`, `-conf`, `-rpcwallet`, `-rpcwait`, `-rpcconnect`), the client-only helpers with no RPC equivalent (`-getinfo`, `-netinfo`, `-addrinfo`, `-generate`), positional vs. `-named` arguments and the per-method JSON conversion that makes some arguments need quotes and others not, passing secrets via `-stdin`/`-stdinrpcpass`/`-stdinwalletpassphrase`, exit codes and stderr, output shapes (bare strings vs. pretty JSON), BTC-vs-satoshi units and float-precision hazards, `vout` structure, fee math, confirmation semantics, and the regtest mine-and-fund workflow. Triggers on "bitcoin-cli", "bitcoind", "getblockchaininfo", "getrawtransaction", "listunspent", "generatetoaddress", "bitcoin-cli error parsing JSON", "bitcoin-cli exit code", and on task phrasings that never name the tool — "check if my node is synced", "look up this txid", "how much is in this wallet", "why is my transaction still unconfirmed", "what fee did I pay", "spin up a local Bitcoin network to test against", "mine some coins to test with", "script this against my node".
+description: Use when driving a Bitcoin Core node from a terminal or a shell script with `bitcoin-cli` — composing a command, quoting its arguments, reading what comes back, or building a pipeline with `jq`. Covers connection and network flags (`-regtest`, `-signet`, `-testnet4`, `-datadir`, `-rpcwallet`, `-rpcwait`, `-rpcconnect`), the client-only helpers (`-getinfo`, `-netinfo`, `-addrinfo`, `-generate`), positional vs. `-named` arguments and the per-method JSON conversion that makes some arguments need quotes and others not, passing secrets via `-stdin`/`-stdinrpcpass`/`-stdinwalletpassphrase`, exit codes and stderr, output shapes, BTC-vs-satoshi units and float-precision hazards, fee math, confirmation semantics, and the regtest mine-and-fund workflow. Triggers on "bitcoin-cli", "bitcoind", "getblockchaininfo", "getrawtransaction", "listunspent", "generatetoaddress", "bitcoin-cli error parsing JSON", and on phrasings that never name the tool — "check if my node is synced", "look up this txid", "how much is in this wallet", "why is my transaction still unconfirmed", "what fee did I pay", "spin up a local Bitcoin network to test against", "mine some coins to test with", "script this against my node". Not for the HTTP wire protocol, authentication mechanisms, or the RPC error-code tables — that is `bitcoin-api`; not for installing Core or getting `bitcoin-cli` onto PATH — that is `bitcoin-install`; not for how Core implements a rule — that is `bitcoin-code`.
 ---
 
 # bitcoin-cli
@@ -17,18 +17,31 @@ commands, surviving the quoting rules, and reading the output correctly.
 - Output: shapes, exit codes, units, `vout`, fees, confirmations, `jq` pipelines
 - The regtest workflow: mine, fund, spend, throw away
 
-Out of scope, with the skill that covers each:
+## Related skills
 
-| Topic | Skill |
+This skill owns **the program**: the `bitcoin-cli` binary, its flags, its argument
+handling, and the text it prints.
+
+| When the question moves to… | Hand off to |
 |---|---|
 | The HTTP wire protocol, auth mechanisms, RPC error-code tables | **`bitcoin-api`** |
-| Installing Bitcoin Core, `bitcoind` first run, Polar | **`bitcoin-install`** |
-| How Core implements any of this | **`bitcoin-code`** |
-| Monetary theory | **`money`** |
+| Installing Core, `command not found`, first run, Polar | **`bitcoin-install`** |
+| How Core implements the rule behind a result | **`bitcoin-code`** |
+| Whether any of this is *money* | **`money`** |
 
 The split with `bitcoin-api` is worth stating plainly: **that skill owns the wire, this one
 owns the program.** When a call fails with a numeric RPC code, the code's meaning lives in
-`bitcoin-api`; how `bitcoin-cli` surfaces it — stderr, exit status — lives here.
+`bitcoin-api`; how `bitcoin-cli` surfaces it — stderr, exit status — lives here. Two
+practical consequences: send a user to `bitcoin-api` the moment they leave the terminal for
+application code, and send them here the moment they come back.
+
+Coming the other way, `bitcoin-install` hands off here as soon as the formula is installed,
+and `bitcoin-api` hands off here when someone reaching for `curl` would be better served by
+one `bitcoin-cli` invocation.
+
+**Shared topic — regtest.** This skill owns the regtest **workflow**:
+`references/regtest.md` is the canonical treatment. `bitcoin-install` owns only *getting a
+regtest node started*, and Polar.
 
 ## The 30-second version
 

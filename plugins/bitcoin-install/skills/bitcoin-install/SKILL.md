@@ -1,6 +1,6 @@
 ---
 name: bitcoin-install
-description: Use when installing, upgrading, uninstalling, or first running Bitcoin Core on macOS — choosing between the Homebrew formula and the Homebrew cask, getting `bitcoin-cli` and `bitcoind` onto your PATH, running the Bitcoin-Qt desktop node and enabling its RPC server, or spinning up a disposable regtest Lightning network with Polar and Docker. Triggers on "install bitcoin", "brew install bitcoin", "install Bitcoin Core", "bitcoin-cli command not found", "bitcoind not found", "I have the app but no command line tools", "set up a bitcoin node", "how do I run bitcoind", "Bitcoin-Qt", "where is bitcoin.conf", "which datadir", "upgrade Bitcoin Core", "uninstall bitcoin", "brew services start bitcoin", "Polar", "polarlightning", "regtest network", "local lightning dev environment", "bitcoin in docker", "polaruser/polarpass", and on phrasings that never name a tool — "my node syncs really slowly", "do I need Docker for this", "how do I test without real money", "I want a local chain I can mine on".
+description: Use when installing, upgrading, uninstalling, or first running Bitcoin Core on macOS — choosing between the Homebrew formula and the Homebrew cask, getting `bitcoin-cli` and `bitcoind` onto your PATH, running the Bitcoin-Qt desktop node and enabling its RPC server, or spinning up a disposable regtest Lightning network with Polar and Docker. Triggers on "install bitcoin", "brew install bitcoin", "install Bitcoin Core", "bitcoin-cli command not found", "bitcoind not found", "I have the app but no command line tools", "set up a bitcoin node", "how do I run bitcoind", "Bitcoin-Qt", "where is bitcoin.conf", "which datadir", "upgrade Bitcoin Core", "uninstall bitcoin", "brew services start bitcoin", "Polar", "polarlightning", "regtest network", "local lightning dev environment", "bitcoin in docker", "polaruser/polarpass", and on phrasings that never name a tool — "my node syncs really slowly", "do I need Docker for this", "how do I test without real money", "I want a local chain I can mine on". macOS only. Not for using the tools once they are installed — that is `bitcoin-cli` for the shell and `bitcoin-api` for HTTP/ZMQ; not for reading Core's source — that is `bitcoin-code`.
 ---
 
 # bitcoin-install
@@ -27,10 +27,31 @@ app. Install both if you want both; they coexist cleanly and share a data direct
 - Polar + Docker: a disposable regtest Bitcoin and Lightning network
 - Upgrading, uninstalling, and the Apple Silicon / Rosetta trap
 
-Out of scope: using the CLI once installed (see `bitcoin-cli`), talking to the node over
-HTTP (see `bitcoin-api`), the Core source tree (see `bitcoin-code`), and non-macOS
-platforms — this skill is macOS-specific. On Linux, prefer your distribution's packages or
-the official binaries from bitcoincore.org.
+Out of scope: non-macOS platforms — this skill is macOS-specific. On Linux, prefer your
+distribution's packages or the official binaries from bitcoincore.org.
+
+## Related skills
+
+This skill owns **getting the software onto the machine and running it the first time**.
+It is the front door: every other Bitcoin skill here assumes binaries exist and a node is
+reachable. Once that is true, hand off and stop.
+
+| When the question moves to… | Hand off to |
+|---|---|
+| Composing commands, quoting arguments, reading output, `jq` | **`bitcoin-cli`** |
+| `curl`, HTTP, application code, REST, ZMQ | **`bitcoin-api`** |
+| What Core's source actually does, or why | **`bitcoin-code`** |
+| Whether any of this is *money* | **`money`** |
+
+Coming the other way, expect to be handed **back** here when: `bitcoin-cli: command not
+found` (the cask ships no binaries — see `references/homebrew.md`), a node can't be reached
+because Bitcoin-Qt's RPC server is off by default (`references/qt-gui.md`), or two nodes
+are fighting over one datadir.
+
+**Shared topic — regtest.** *Starting* a regtest node lives here
+(`references/cli-tools.md`), and the Lightning-flavoured version lives in
+`references/polar.md`. The regtest *workflow* — mine, fund, spend, control time, tear
+down — belongs to `bitcoin-cli`. Don't restate it here.
 
 ## Which do you want?
 
