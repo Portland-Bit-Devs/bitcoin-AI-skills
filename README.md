@@ -12,7 +12,7 @@ tell you when you want a sibling; install all five and they route between themse
 Add the marketplace once:
 
 ```bash
-claude plugin marketplace add austenjt/bitcoin-AI-skills
+claude plugin marketplace add Portland-Bit-Devs/bitcoin-AI-skills
 ```
 
 Then install what you want:
