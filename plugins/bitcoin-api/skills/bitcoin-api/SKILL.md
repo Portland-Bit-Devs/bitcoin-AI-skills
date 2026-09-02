@@ -109,7 +109,7 @@ Load these on demand; don't read them all for a passing question. Each file open
 |---|---|---|
 | `references/connection.md` | You **can't reach the node** — auth, ports, `bitcoin.conf`, binding, and a symptom-first troubleshooting table | partly |
 | `references/json-rpc.md` | Calls get through and you're **debugging what comes back** — endpoints, parameters, 1.1 vs. 2.0, batching, error codes | **yes** |
-| `references/rest.md` | You want **unauthenticated read-only** chain data, or raw binary | docs only |
+| `references/rest.md` | You want **unauthenticated read-only** chain data, or raw binary | **yes** |
 | `references/zmq.md` | You'd otherwise **poll in a loop** — topics, framing, and delivery caveats | docs only |
 | `references/recipes.md` | You want **something that runs** — shell, Python, JavaScript, Postman, a health check | **yes** |
 | `references/sources.md` | You need to **check a claim** upstream, or you're about to edit this skill | — |
@@ -125,8 +125,9 @@ Written against **Bitcoin Core v31.0** — `doc/JSON-RPC-interface.md`,
 `doc/REST-interface.md`, `doc/zmq.md`, and `src/rpc/protocol.h`.
 
 The JSON-RPC material and every code example were verified against a live mainnet Core
-v31.0.0 node, which corrected several claims. REST and ZMQ were not: that node had `-rest`
-disabled and no `-zmqpub*` endpoints. The table above marks which is which, and
+v31.0.0 node, which corrected several claims. The REST paths were later verified against a
+Core v31.1 regtest node with `-rest=1`. ZMQ remains documentation-derived: its message
+framing was never observed on the wire. The table above marks which is which, and
 `references/sources.md` records exactly what was tested, what changed, and what wasn't.
 
 Where a detail is version-sensitive, the reference files say so.

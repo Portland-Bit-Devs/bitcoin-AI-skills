@@ -85,12 +85,23 @@ and produce the output they claim, including their error paths. Running the heal
 also surfaced a bug since fixed: jq's `halt_error` emits its string without a trailing
 newline.
 
-**Not verified — documentation-derived only:**
+**REST verified separately.** On 2026-09-01 a Bitcoin Core **v31.1** regtest node was
+started with `-rest=1` and every path in `rest.md` was requested. `chaininfo.json`,
+`deploymentinfo.json`, `mempool/info.json`, `mempool/contents.json`, `blockhashbyheight`,
+`block` (`.json`/`.hex`/`.bin`), `block/notxdetails`, `blockpart` with `offset`/`size`,
+`headers` with `count`, `spenttxouts`, and `getutxos/checkmempool` all returned `200`, and
+`headers?count=3` returned exactly three headers. Two behaviours were pinned down that the
+docs do not state: `/rest/tx/<txid>.json` returns **404** for a confirmed transaction when
+`txindex` is off (confirming the mempool-only default), and the two blockfilter endpoints
+return **HTTP 400** — not 404 — when `blockfilterindex` is disabled. `rest.md` was updated
+with both.
 
-- Every `/rest/` path. The node had `-rest` disabled; all paths returned an empty-bodied
-  `404`, which confirms only the disabled-interface signature.
-- All ZMQ topics and message framing. ZMQ was compiled in (`Zmq` appears in `help`) but no
-  `-zmqpub*` endpoints were configured.
+**Not verified — documentation-derived only:**
+- **ZMQ message framing.** Endpoint *configuration* was later confirmed on the regtest node
+  — `getzmqnotifications` listed `pubrawblock` and `pubsequence` with `hwm 1000`, and the
+  compiled-in-vs-absent distinction was confirmed on two separate builds. But no subscriber
+  was ever attached, so the topics, body layouts, and sequence-number framing in `zmq.md`
+  remain unobserved. Closing this needs a ZMQ client (`pyzmq` was not installed).
 - Error `-19`, which requires two or more wallets loaded. The verification node had none,
   and loading wallets on someone's mainnet node is a write.
 - Every code in the error tables not listed above. Those are transcribed from

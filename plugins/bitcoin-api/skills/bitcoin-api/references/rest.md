@@ -4,9 +4,8 @@
 > binary — typically for indexing or bulk chain walking. Anything involving a wallet, or
 > any write, has to go through JSON-RPC instead.
 >
-> **Status: documentation-derived.** Unlike `json-rpc.md`, the paths below have *not* been
-> exercised against a live node — see `sources.md`. Treat them as accurate to Core's docs
-> at v31.0, not as observed behaviour.
+> **Status: verified.** Every path below was exercised against a live Bitcoin Core v31.1
+> regtest node with `-rest=1` — see `sources.md`.
 
 **In this file**
 
@@ -69,7 +68,8 @@ GET /rest/tx/<TX-HASH>.<bin|hex|json>
 
 **Searches the mempool only, by default.** To retrieve a confirmed transaction you need
 `txindex=1`. Returns `404` if not found — and "not found" here usually means "not indexed"
-rather than "does not exist."
+rather than "does not exist". Confirmed: on a node without `txindex`, requesting a
+*confirmed* transaction that certainly exists still returns `404`.
 
 ### Blocks
 
@@ -106,7 +106,9 @@ GET /rest/blockfilter/<FILTERTYPE>/<BLOCK-HASH>.<bin|hex|json>
 GET /rest/blockfilterheaders/<FILTERTYPE>/<BLOCK-HASH>.<bin|hex|json>?count=<COUNT=5>
 ```
 
-`FILTERTYPE` is `basic` in practice. Requires `blockfilterindex=1` on the node.
+`FILTERTYPE` is `basic` in practice. Requires `blockfilterindex=1` on the node — without
+it both endpoints return **HTTP 400**, not 404. A 400 here means "index disabled", not
+"bad request".
 The positional-count form of `blockfilterheaders` is likewise deprecated since 24.0.
 
 ### Block hash by height

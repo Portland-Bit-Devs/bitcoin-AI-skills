@@ -10,6 +10,31 @@
   },
   "plugins": [
     {
+      "name": "bitcoin-install",
+      "source": "./plugins/bitcoin-install",
+      "description": "Install and first-run Bitcoin Core on macOS: the Homebrew formula (command-line tools) versus the cask (Qt desktop node), which one gives you what, and how to run a throwaway regtest network with Polar and Docker.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jon Austen"
+      },
+      "license": "GPL-3.0",
+      "category": "development",
+      "keywords": [
+        "bitcoin",
+        "bitcoin-core",
+        "install",
+        "homebrew",
+        "brew",
+        "bitcoin-cli",
+        "bitcoind",
+        "bitcoin-qt",
+        "polar",
+        "docker",
+        "regtest",
+        "macos"
+      ]
+    },
+    {
       "name": "bitcoin-cli",
       "source": "./plugins/bitcoin-cli",
       "description": "Drive a Bitcoin Core node from the command line: bitcoin-cli invocation, JSON-RPC methods, wallet and chainstate queries, and reading the results correctly.",
